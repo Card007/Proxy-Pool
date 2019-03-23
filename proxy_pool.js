@@ -55,35 +55,112 @@ var loadHtml = function(data){
 
 //链接网络
 var requestProxy = function(options){
-    request(options, function(err, response, body){
-        if(err === null && response.statusCode === 200){
-            loadHtml(body)
-        } else {
-            console.log('链接失败')
-        }
+    return new Promise((resolve, reject) => {
+        request(options, function(err, response, body){
+            if(err === null && response.statusCode === 200){
+                loadHtml(body)
+                resolve()
+            } else {
+                console.log('链接失败')
+                resolve()
+            }
+        })
     })
 }
 
-var ipUrl = function(){
+var ipUrl = function(resolve){
     var useragent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36'
 
     var headers = {
         'User-Agent': useragent,
     }
 
+    var url = 'http://www.xicidaili.com/nn/'
+
     var options = {
         url:'http://www.xicidaili.com/nn/',
         headers,
     }
+
+    var arr = []
    
     for (let i = 1; i <= 10; i++) {
-        url = options.url + i
-        requestProxy(options)
+        options.url = url + i
+        arr.push(requestProxy(options))
     }
+    Promise.all(arr).then(function(){
+        resolve()
+    })
+}
+
+var allIp = function(callback){
+    return db.all('select * from proxy', callback)
+}
+
+var Proxys = function(ip,port,type){
+    this.ip = ip
+    this.port = port
+    this.type = type
+}
+
+var runIp = function(resolve){
+    var useragent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36'
+
+    var headers = {
+        'User-Agent': useragent,
+    }
+
+    var arr = []
+
+    allIp((err,response) => {
+        for (let i = 0; i < response.length; i++) {
+            var ip = response[i]
+            var proxy = new Proxys(ip.ip, ip.port, ip.type)
+            arr.push(check(proxy, headers))
+        }
+        Promise.all(arr).then(function(){
+            allIp((err,response) => {
+                console.log("可用ip为：\n" + response)
+            })
+        })
+    })
+}
+
+var check = function(proxy, headers){
+    return new Promise((resolve, reject) => {
+        request({
+            url:'http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js',
+            proxy: `${proxy.type.toLowerCase()}://${proxy.ip}:${proxy.port}`,
+            method:'GET',
+            timeout: 2000,
+            headers,}
+            ,function(err, response,body){
+                if(!err && response.statusCode == 200){
+                    console.log(proxy.ip+' 链接成功：')
+                    resolve()
+                } else {
+                    console.log(proxy.ip+' 链接失败')
+                    removeIp(proxy.ip)
+                    resolve()
+                }
+            }
+        )
+    })
+}
+
+var removeIp = function(ip){
+    db.run(`DELETE FROM proxy WHERE ip = '${ ip }'`, function(err){
+        if(err){
+            console.log(err)
+        }else {
+            console.log('成功删除：'+ip)
+        }
+    })
 }
 
 var __main = function(){
-    ipUrl()
+    new Promise(ipUrl).then(runIp)
+
 }
 
 __main()
