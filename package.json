@@ -1,0 +1,26 @@
+{
+  "name": "ProxyPool",
+  "version": "1.0.0",
+  "description": "爬取代理IP并进行测速，筛选出高速可用的ip",
+  "main": "ip_list.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "request": "^2.88.0",
+    "sqlite3": "^4.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Card007/ProxyPool.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Card007/ProxyPool/issues"
+  },
+  "homepage": "https://github.com/Card007/ProxyPool#readme"
+}
