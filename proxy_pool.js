@@ -15,6 +15,12 @@ var db = new sqlite3.Database('Proxy.db', (err) => {
 
 db.run('CREATE TABLE proxy(ip char(15), port char(15), type char(15))',(err) => {})
 
+var useragent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36'
+
+var headers = {
+    'User-Agent': useragent,
+}
+
 //添加数据文件
 var insertDb = function(ip, port, type){
     db.run("INSERT INTO proxy VALUES(?, ?, ?)",[ip,port,type])
@@ -69,12 +75,6 @@ var requestProxy = function(options){
 }
 
 var ipUrl = function(resolve){
-    var useragent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36'
-
-    var headers = {
-        'User-Agent': useragent,
-    }
-
     var url = 'http://www.xicidaili.com/nn/'
 
     var options = {
@@ -104,12 +104,6 @@ var Proxys = function(ip,port,type){
 }
 
 var runIp = function(resolve){
-    var useragent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.98 Safari/537.36'
-
-    var headers = {
-        'User-Agent': useragent,
-    }
-
     var arr = []
 
     allIp((err,response) => {
@@ -120,7 +114,8 @@ var runIp = function(resolve){
         }
         Promise.all(arr).then(function(){
             allIp((err,response) => {
-                console.log("可用ip为：\n" + response)
+                console.log("\n\n可用ip为:")
+                console.log(response)
             })
         })
     })

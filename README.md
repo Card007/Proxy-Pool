@@ -1,4 +1,9 @@
 # ProxyPool
-爬取代理IP，通过多线程对爬取IP进行测速分析，确保高度可用
+爬取代理IP，通过多线程对爬取IP进行测速分析，筛选出高速可用的ip
 
-![imag](https://github.com/Card007/Proxy-Pool/blob/master/other/屏幕快照%202019-03-20%2016.46.38.png)
+启动程序即可自动获取
+```javascript
+node proxy_pool.js
+```
+
+![imag](https://github.com/Card007/Proxy-Pool/blob/master/other/ip_proxy.png)
