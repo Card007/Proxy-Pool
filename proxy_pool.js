@@ -113,8 +113,8 @@ var runIp = function(resolve){
             arr.push(check(proxy, headers))
         }
         Promise.all(arr).then(function(){
-            allIp((err,response) => {
-                console.log("\n\n可用ip为:")
+            allIp((err, response)=>{
+                console.log('\n\n可用ip为:')
                 console.log(response)
             })
         })
@@ -155,7 +155,6 @@ var removeIp = function(ip){
 
 var __main = function(){
     new Promise(ipUrl).then(runIp)
-
 }
 
 __main()
