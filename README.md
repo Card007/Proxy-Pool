@@ -8,7 +8,7 @@ node proxy_pool.js
 
 查看优化后的ip
 ```javascript
-node iplist.js
+node ip_list.js
 ```
 
 ![imag](https://github.com/Card007/Proxy-Pool/blob/master/other/ip_proxy.png)
