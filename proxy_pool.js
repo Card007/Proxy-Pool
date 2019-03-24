@@ -84,7 +84,7 @@ var ipUrl = function(resolve){
 
     var arr = []
    
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 5; i++) {
         options.url = url + i
         arr.push(requestProxy(options))
     }
