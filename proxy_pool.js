@@ -74,6 +74,7 @@ var requestProxy = function(options){
     })
 }
 
+//生成网址
 var ipUrl = function(resolve){
     var url = 'http://www.xicidaili.com/nn/'
 
@@ -93,16 +94,19 @@ var ipUrl = function(resolve){
     })
 }
 
+//从数据库提取所有ip
 var allIp = function(callback){
     return db.all('select * from proxy', callback)
 }
 
+//代理ip对象
 var Proxys = function(ip,port,type){
     this.ip = ip
     this.port = port
     this.type = type
 }
 
+//提取所有ip，通过check函数检查
 var runIp = function(resolve){
     var arr = []
 
@@ -121,6 +125,7 @@ var runIp = function(resolve){
     })
 }
 
+//检测ip
 var check = function(proxy, headers){
     return new Promise((resolve, reject) => {
         request({
@@ -143,6 +148,7 @@ var check = function(proxy, headers){
     })
 }
 
+//删除命令
 var removeIp = function(ip){
     db.run(`DELETE FROM proxy WHERE ip = '${ ip }'`, function(err){
         if(err){
@@ -153,8 +159,14 @@ var removeIp = function(ip){
     })
 }
 
-var __main = function(){
+exports.__main = function(){
     new Promise(ipUrl).then(runIp)
 }
 
-__main()
+exports.check = function(){
+    runIp()
+}
+
+exports.ips = function(callback){
+    allIp(callback)
+}
