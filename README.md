@@ -22,15 +22,14 @@ node check.js
 //导入本地模块
 var proxy = require('./proxy_pool.js')
 
-//check为检查数据库里的ip
-var check = proxy.check
-
-//爬取ip并储存
+//主程序，爬取ip+检查ip
 var proxys = proxy.__main
+
+//不爬取，只检查数据库里现有的ip
+var check = proxy.check
 
 //提取所有ip
 var ips = proxy.ips
-
 //ips接收一个处理函数，然后向这个函数传递两个参数，一个为错误信息，另一个为返回内容
 ips((err,response)=>{
     console.log(response)
