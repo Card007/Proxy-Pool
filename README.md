@@ -8,7 +8,7 @@
 npm install
 ```
 
-**2.爬取代理ip并进行测速**
+**2.爬取代理ip并进行测速检查**
 ```javascript
 node main.js
 ```
