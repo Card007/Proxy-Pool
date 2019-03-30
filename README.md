@@ -13,7 +13,7 @@ npm install
 node main.js
 ```
 
-**3.对库里的ip进行检查**
+**3.只检查数据库里现有的ip**
 ```javascript
 node check.js
 ```
