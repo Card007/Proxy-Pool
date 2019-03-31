@@ -3,7 +3,7 @@
 
 更新内容：改了接口，详情请看第四条
 
-**0.也可以直接通过通过npm进行安装**
+**0.可以直接通过通过npm进行安装**
 ```javascript
 npm install ip-proxy-pool
 ```
