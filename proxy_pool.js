@@ -159,7 +159,7 @@ var removeIp = function(ip){
     })
 }
 
-exports.__main = function(){
+exports.run = function(){
     new Promise(ipUrl).then(runIp)
 }
 
