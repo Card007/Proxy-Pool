@@ -2,6 +2,7 @@
 爬取代理IP并进行测速，筛选出高速可用的ip。
 
 **0.安装方式**
+
 有两种安装方式，一种直接通过npm安装，然后直接跳到第四步：
 ```javascript
 npm install ip-proxy-pool
