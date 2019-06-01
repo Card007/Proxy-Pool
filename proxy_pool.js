@@ -82,15 +82,16 @@ const ipUrl = function(resolve){
         url:'http://www.xicidaili.com/nn/',
         headers,
     }
-
     let arr = []
    
-    for (let i = 1; i <= 5; i++) {
-        options.url = url + i
-        arr.push(requestProxy(options))
-    }
-    Promise.all(arr).then(function(){
-        resolve()
+    return new Promise((resolve, reject) => {
+        for (let i = 1; i <= 5; i++) {
+            options.url = url + i
+            arr.push(requestProxy(options))
+        }
+        Promise.all(arr).then(function(){
+            resolve()
+        })
     })
 }
 
@@ -159,8 +160,10 @@ const removeIp = function(ip){
     })
 }
 
-exports.run = function(){
-    new Promise(ipUrl).then(runIp)
+exports.run = async function(){
+    // new Promise(ipUrl).then(runIp)
+    await ipUrl()
+    runIp()
 }
 
 exports.check = function(){
