@@ -1,9 +1,6 @@
-var request = require('request')
-var cheerio = require('cheerio')
-var sqlite3 = require('sqlite3')
-
-//实现爬取分析功能
-//接下来是数据库和去除不能用的ip
+const request = require('request')
+const cheerio = require('cheerio')
+const sqlite3 = require('sqlite3')
 
 const db = new sqlite3.Database('Proxy.db', (err) => {
     if(!err){
@@ -108,7 +105,7 @@ const Proxys = function(ip,port,type){
 }
 
 //提取所有ip，通过check函数检查
-const runIp = function(resolve){
+const runIp = async function(){
     let arr = []
 
     allIp((err,response) => {
@@ -161,9 +158,8 @@ const removeIp = function(ip){
 }
 
 exports.run = async function(){
-    // new Promise(ipUrl).then(runIp)
     await ipUrl()
-    runIp()
+    await runIp()
 }
 
 exports.check = function(){
