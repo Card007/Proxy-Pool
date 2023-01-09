@@ -1,4 +1,7 @@
-var proxy = require('./proxy_pool.js')
+const proxy = require('./proxy_pool.js')
 
-var proxy = proxy.run
-proxy()
+function main() {
+  proxy.run()
+}
+
+main()
